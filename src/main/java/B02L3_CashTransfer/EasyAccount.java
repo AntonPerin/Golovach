@@ -1,24 +1,26 @@
 package B02L3_CashTransfer;
 
 import java.time.LocalTime;
+import java.util.Random;
+
+/* Class that creates accounts with account balance field and unique account id*/
 
 public class EasyAccount {
-    static private int id=1000;
+    private static int id = 1000;
     private int accountId;
-    int accountBalance;
+    private int accountBalance;
 
     {
         accountId = id;
         id++;
     }
 
-
     public EasyAccount() {
 
         this.accountBalance = 0;
     }
 
-    public EasyAccount(int money) {
+    EasyAccount(int money) {
 
         this.accountBalance = money;
     }
@@ -41,26 +43,24 @@ public class EasyAccount {
     public static void printEasyAccount(EasyAccount account) {
         System.out.println("Account whith ID: " + account.getAccountId() +
                 " has " + account.getAccountBalance() + " USD");
-        System.out.println();
     }
 
     public static void printEasyAccount(EasyAccount[] accounts) {
-        for (int j = 0; j < accounts.length; j++) {
-            System.out.println("Account whith ID: " + accounts[j].getAccountId() +
-                    " has " + accounts[j].getAccountBalance() + " USD");
+        for (EasyAccount e: accounts) {
+            System.out.println("Account whith ID: " + e.getAccountId() +
+                    " has " + e.getAccountBalance() + " USD");
         }
         System.out.println();
     }
 
 
-    public static boolean transfer01(EasyAccount[] accounts, int[] cash) throws Throwable{
-
+    public static boolean transfer01(EasyAccount[] accounts, int[] cash) throws Throwable {
         boolean result = true;
         int brIndex = -1;
 
         for (int i = 0; i < accounts.length; i++) {
             try {
-                attemptForvard(accounts[i], cash[i]);
+                attemptForward(accounts[i], cash[i]);
             } catch (ZedDeadBabyExtension e) {
                 System.out.println("Operation failed for account number " + i);
                 result = false;
@@ -68,28 +68,23 @@ public class EasyAccount {
                 printEasyAccount(accounts);
                 break;
             }
-
             System.out.println("Success!");
         }
-
         if (brIndex > 0) {
             for (int i = (brIndex - 1); i >= 0; i--) {
                 attemptBack(accounts[i], (-cash[i]));
                 System.out.println("Transaction " + i + " is denied!");
             }
-
         }
         return result;
     }
 
-    private static void attemptForvard(EasyAccount e, int cash) throws ZedDeadBabyExtension , InterruptedException {
+    private static void attemptForward(EasyAccount e, int cash) throws ZedDeadBabyExtension, InterruptedException {
         try {
             System.out.println(e.getAccountId() + " one more attempt.");
             e.changeForward(cash);
         } catch (TryAgainException retry) {
-            //Thread.sleep(1);
-            attemptForvard(e, cash);
-
+            attemptForward(e, cash);
         }
     }
 
@@ -99,19 +94,19 @@ public class EasyAccount {
             e.changeBack(cash);
         } catch (Exception retry) {
             attemptBack(e, cash);
-
         }
     }
 
-    public void changeForward(int sumAdd) throws TryAgainException, ZedDeadBabyExtension {
-        LocalTime t = LocalTime.now();
-        int ns = (t.getNano() / 1000000) % 10;
+    private void changeForward(int sumAdd) throws TryAgainException, ZedDeadBabyExtension {
+        int maxNs = 15;
+        Random nsr = new Random();
+        int ns = nsr.nextInt(maxNs);
 
-        if (ns < 4) {
-            this.accountBalance +=sumAdd;
+        if (ns < 5) {
+            this.accountBalance += sumAdd;
 
         } else {
-            if (ns < 8) {
+            if (ns < 14) {
                 throw new TryAgainException();
             } else {
                 throw new ZedDeadBabyExtension();
@@ -120,45 +115,17 @@ public class EasyAccount {
 
     }
 
-    public void changeBack(int sumAdd) throws TryAgainException {
-        LocalTime t = LocalTime.now();
-        int ns = (t.getNano() / 1000000) % 10;
+    private void changeBack(int sumAdd) throws TryAgainException {
+        int maxNs = 10;
+        Random nsr = new Random();
+        int ns = nsr.nextInt(maxNs);
 
-        if (ns < 1) {
+        if (ns < 3) {
             this.accountBalance = this.accountBalance + sumAdd;
         } else {
             throw new TryAgainException();
         }
-
     }
-
-//    public static boolean transfer(EasyAccount[] accounts, int[] cash) {
-//
-//        boolean result = true;
-//        for (int i = 0; i < accounts.length; i++) {
-//            attemptBack(accounts[i], cash[i]);
-//        }
-//        return result;
-//    }
-
-//    public static boolean transfer0(EasyAccount[] accounts, int[] cash) {
-//
-//        boolean result = true;
-//
-//        for (int i = 0; i < accounts.length; i++) {
-//            try {
-//                attemptForvard(accounts[i], cash[i]);
-//            } catch (ZedDeadBabyExtension e) {
-//                System.out.println("Operation failed for account number " + i);
-//                result = false;
-//                break;
-//            }
-//            System.out.println("Success!");
-//        }
-//        return result;
-//    }
-
-
 }
 
 
