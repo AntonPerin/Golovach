@@ -119,6 +119,7 @@ public class EasyAccount {
         int maxNs = 10;
         Random nsr = new Random();
         int ns = nsr.nextInt(maxNs);
+
         if (ns < 3) {
             this.accountBalance = this.accountBalance + sumAdd;
         } else {
@@ -128,5 +129,5 @@ public class EasyAccount {
 }
 
 
-//12345
+
 
