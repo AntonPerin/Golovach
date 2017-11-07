@@ -1,6 +1,6 @@
 package B02L3_CashTransfer;
 
-import static B02L3_CashTransfer.EasyAccount.printEasyAccount;
+import static B02L3_CashTransfer.AEasyAccount.printEasyAccount;
 
 /*Program that tests method transfer01.
 Method trying to make set of transactions to given EasyAccounts.
@@ -14,28 +14,28 @@ public class ProgramSetOfTransactions {
         int num =15; //Number of accounts that will be created and placed to array bankAccounts
                     //And number of cash transactions
 
-        EasyAccount[] bankAccounts = new EasyAccount[num];
+        AEasyAccount[] bankAccounts = new AEasyAccount[num];
         int[] cash = new int[num];
         cash[0]=50;
         for (int i =0;i<bankAccounts.length;i++){
-            bankAccounts[i]=new EasyAccount();
+            bankAccounts[i]=new AEasyAccount();
             cash[i]=cash[0]+i*100;
         }
 
-//        EasyAccount a = new EasyAccount(100);
-//        EasyAccount b = new EasyAccount(0);
-//        EasyAccount c = new EasyAccount(0);
-//        EasyAccount d = new EasyAccount(400);
-//        EasyAccount a1 = new EasyAccount(500);
-//        EasyAccount b1 = new EasyAccount(600);
-//        EasyAccount c1 = new EasyAccount(700);
-//        EasyAccount d1 = new EasyAccount(800);
-//        EasyAccount[] bankAccounts = {a, b, c};//, d,a1,b1,c1,d1};
+//        AEasyAccount a = new AEasyAccount(100);
+//        AEasyAccount b = new AEasyAccount(0);
+//        AEasyAccount c = new AEasyAccount(0);
+//        AEasyAccount d = new AEasyAccount(400);
+//        AEasyAccount a1 = new AEasyAccount(500);
+//        AEasyAccount b1 = new AEasyAccount(600);
+//        AEasyAccount c1 = new AEasyAccount(700);
+//        AEasyAccount d1 = new AEasyAccount(800);
+//        AEasyAccount[] bankAccounts = {a, b, c};//, d,a1,b1,c1,d1};
 //        int[] cash={-100,70,30};//,300,400,500,600,700};
 
         printEasyAccount(bankAccounts);
 
-        boolean tRes= B02L3_CashTransfer.EasyAccount.transfer01(bankAccounts,cash);
+        boolean tRes= AEasyAccount.transfer01(bankAccounts,cash);
         System.out.println("All transactions are "+tRes+"!");
         System.out.println();
 
